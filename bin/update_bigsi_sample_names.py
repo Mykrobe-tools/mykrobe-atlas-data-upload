@@ -42,7 +42,7 @@ def _migrate(id_mapping_filepath, db_storage_engine, storage_filepath=None):
     current_metadata = SampleMetadata(storage)
     with open(id_mapping_filepath, 'r') as infile:
         for line in infile:
-            isolate_id, experiment_id, tracking_id = line.strip().split(",")
+            isolate_id, _, tracking_id = line.strip().split(",")
             if tracking_id and tracking_id != isolate_id:
                 colour = current_metadata.sample_to_colour(isolate_id)
                 if colour:
