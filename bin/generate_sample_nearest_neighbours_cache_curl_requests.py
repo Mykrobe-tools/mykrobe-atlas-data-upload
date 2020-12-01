@@ -35,8 +35,8 @@ def _generate_requests(sample_mapping_csv, sample_nearest_leaf_filepath, sample_
                 "result": data
             }
             print('echo \'' + json.dumps(payload) +
-                  '\' | curl -X POST -w "\\n" -H "Content-Type: application/json" -d @- ' + atlas_api_host +
-                  '/experiments/' + isolate_to_experiment[sample] + '/results')
+                  '\' | curl -X POST -w "\\n" -H "Authorization: Bearer $1" -H "Content-Type: application/json" -d @- ' +
+                  atlas_api_host + '/experiments/' + isolate_to_experiment[sample] + '/results')
 
 
 parser = argparse.ArgumentParser(description="Generate curl requests for sample nearest neighbours cache")
