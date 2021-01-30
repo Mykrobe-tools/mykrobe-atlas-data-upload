@@ -10,8 +10,10 @@ def _extract(included_sample_file, sample_mapping_csv):
     with open(sample_mapping_csv, 'r') as csv:
         for line in csv:
             experiment_id, isolate_id, tracking_id = line.strip().split(',')
-            if isolate_id and isolate_id in included_samples:
+            if isolate_id in included_samples:
                 print(f'{isolate_id},{experiment_id},{tracking_id}')
+            elif experiment_id in included_samples:
+                print(f'{experiment_id},{isolate_id},{tracking_id}')
 
 
 parser = argparse.ArgumentParser(description='Extract sample mapping')
