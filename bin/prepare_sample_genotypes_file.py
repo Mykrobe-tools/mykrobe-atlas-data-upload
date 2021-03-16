@@ -13,7 +13,7 @@ def _generate_sample_genotype_file(sample_mapping_csv, sample_genotypes_filepath
             isolate, genotypes = line.rstrip().split('\t', maxsplit=1)
             if isolate not in isolate_to_tracking:
                 continue
-            print(f"{isolate_to_tracking[isolate]}\t{isolate_to_tracking[isolate]}")
+            print(f"{isolate_to_tracking[isolate]}\t{genotypes}")
 
 
 parser = argparse.ArgumentParser(description="Generate sample genotypes for uploading to redis")
