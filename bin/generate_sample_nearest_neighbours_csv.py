@@ -17,17 +17,17 @@ def _generate_requests(included_samples_file, sample_mapping_csv, sample_nearest
     with open(sample_nearest_neighbours_filepath, "r") as f:
         first_line = next(f)
         target_list = list(map(lambda x: x.strip(), first_line.rstrip().split('\t')))
-        line_num = 1
         for line in f:
-            line_num += 1
             distances = line.rstrip().split('\t')
             source_sample = distances[0].strip()
             if source_sample not in included_samples:
                 continue
             if source_sample not in isolate_to_tracking:
                 continue
-            for i in range(line_num, len(distances)):
+            for i in range(1, len(distances)):
                 target_sample = target_list[i]
+                if target_sample == source_sample:
+                    continue
                 if target_sample not in isolate_to_tracking:
                     continue
                 if distance_threshold >= int(distances[i]):
