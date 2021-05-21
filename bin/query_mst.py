@@ -17,24 +17,24 @@ def _convert_key_to_bytes(key):
 
 def _query_for_mst(sample_id, berkeley_db_file):
     neighbours, distances = _query_db(berkeley_db_file, sample_id)
-    nodes = neighbours.split(',')
-    num_nodes = len(nodes)
-    input_matrix = csr_matrix(np.frombuffer(ast.literal_eval(distances), dtype=np.uint8).reshape(num_nodes, num_nodes))
+    samples = neighbours.split(',')
+    num_samples = len(samples)
+    input_matrix = csr_matrix(np.frombuffer(ast.literal_eval(distances), dtype=np.uint8).reshape(num_samples, num_samples))
     mst = minimum_spanning_tree(input_matrix)
-    tree = _extract_minimum_spanning_tree(nodes, mst)
+    tree = _extract_minimum_spanning_tree(samples, mst)
     print(json.dumps(tree))
 
 
-def _extract_minimum_spanning_tree(nodes, mst):
+def _extract_minimum_spanning_tree(samples, mst):
     relationships = []
-    num_of_nodes = len(nodes)
+    num_samples = len(samples)
     matrix = mst.toarray()
-    for row in range(num_of_nodes - 1):
-        for col in range(row + 1, num_of_nodes):
+    for row in range(num_samples - 1):
+        for col in range(row + 1, num_samples):
             if matrix[row][col] > 0:
                 relationships.append({
-                    "start": nodes[row],
-                    "end": nodes[col],
+                    "start": samples[row],
+                    "end": samples[col],
                     "distance": int(matrix[row][col] - 1)
                 })
     return relationships
